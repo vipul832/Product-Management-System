@@ -1,3 +1,7 @@
-.navbar-brand{
-    font-family: 'Tilt Prism', cursive;
+.navbar-brand {
+  font-family: "Tilt Prism", cursive;
+}
+
+* {
+  font-family: "Roboto", sans-serif;
 }

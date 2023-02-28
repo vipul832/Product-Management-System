@@ -1,6 +1,10 @@
 //submit button
 const addSubmitBtn = document.querySelector("#addSubmit");
 
+function generateId() {
+  productId.value = Math.round(Math.random() * 10000 + 1);
+}
+
 //form input selector
 const productId = document.getElementById("productId");
 const productName = document.getElementById("productName");
@@ -15,8 +19,15 @@ if (productObj == null) {
 }
 
 addSubmitBtn.addEventListener("click", () => {
-  if (productId.value == "") {
-    console.log("black");
+  if (
+    productId.value == "" ||
+    productImg.value == "" ||
+    productName.value == "" ||
+    productPrice.value == "" ||
+    productDesc.value == ""
+  ) {
+    alert("insert in value");
+    return;
   }
 
   if (productObj.hasOwnProperty(productId.value)) {
@@ -24,6 +35,7 @@ addSubmitBtn.addEventListener("click", () => {
     alert("Product Id is already Exist !");
   } else {
     productObj[productId.value] = {
+      id: productId.value,
       name: productName.value,
       img: productImg.value,
       price: productPrice.value,

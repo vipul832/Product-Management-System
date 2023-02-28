@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pms Products</title>
 
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./css/style.css" />
     <!--Google fonts-->
     <!--Tilt fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -59,9 +59,9 @@
               <!-- <li class="nav-item">
                 <a class="nav-link" href="./addproduct.html">Add Product</a>
               </li> -->
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a class="nav-link" href="#">View Product</a>
-              </li>
+              </li> -->
             </ul>
           </div>
         </div>
@@ -82,6 +82,7 @@
                 <input
                   type="text"
                   name="productId"
+                  readonly
                   class="form-control"
                   id="productId"
                   placeholder="Product Id"
@@ -127,9 +128,9 @@
                 ></textarea>
                 <div class="form-btn-area mt-3">
                   <button
-                    type="button"
                     class="btn btn-success text-light"
                     id="addSubmit"
+                    type="button"
                   >
                     Add
                   </button>
@@ -139,6 +140,15 @@
                     id="addSubmit"
                   >
                     reset
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger text-light"
+                    id="gen-btn"
+                    onclick="generateId()"
+                    ;
+                  >
+                    Generate Id
                   </button>
                 </div>
               </form>
@@ -155,6 +165,6 @@
       integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
       crossorigin="anonymous"
     ></script>
-    <script src="./addproduct.js"></script>
+    <script src="./js/addproduct.js"></script>
   </body>
 </html>

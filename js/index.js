@@ -52,27 +52,35 @@ function updateData() {
 }
 
 function deleteData(id) {
-  delete productObj[id];
-  localStorage.setItem("productObj", JSON.stringify(productObj));
-  location.reload();
+  let ans = prompt(
+    `Are you sure to Delete ${id}? Note: type Y for Yes and N for No`
+  );
+  console.log(ans);
+
+  if (ans == "Y") {
+    delete productObj[id];
+    localStorage.setItem("productObj", JSON.stringify(productObj));
+    location.reload();
+  } else {
+    return;
+  }
 }
 
 function addNewCard(productObj) {
   for (let i in productObj) {
-    const newCard = `<div class="card m-2" id="${productObj[i]["id"]}" style="width: 18rem">
+    const newCard = `<div class="card m-2" id="${productObj[i]["id"]}">
     <p class="mx-2">#${productObj[i]["id"]}</p>
     <img
       src="${productObj[i]["img"]}"
       class="card-img-top"
       alt=""
-      width="200px"
       height="200px"
     />
     <div class="card-body">
-      <h5 class="card-title fs-4 ">${productObj[i]["name"]}</h5>
+      <h5 class="card-title fs-4">${productObj[i]["name"]}</h5>
       <hr/>
       <p class="card-text">
-      Description:
+      <b>Description:</b>
       ${productObj[i]["desc"]}
       </p>
       <hr/>
@@ -100,28 +108,61 @@ function addNewCard(productObj) {
 const filterValue = document.getElementById("filter-info");
 const sortValue = document.getElementById("sort-info");
 
-filterValue.addEventListener("click", () => {
+filterValue.addEventListener("change", () => {
+  filterData(filterValue.value, sortValue.value);
+});
+sortValue.addEventListener("change", () => {
   filterData(filterValue.value, sortValue.value);
 });
 
 let keys = Object.keys(productObj);
 
+let newObj = [];
 console.log(keys);
 function filterData(filterValue, sortValue) {
   if (filterValue == "id" && sortValue == "asc") {
     console.log("output");
-    for (i = 0; i < keys.length; i++) {
-      console.log(productObj[keys[i]]["id"]);
+    newObj = [];
+    if (productObj == null || objLength == 0) {
+      cardArea.innerHTML = `<div class="Empty-area">
+      <div class="row">
+        <div class="col text-center">
+        <p class="fw-bold" >There is no Product in Inventory !</p>
+          <img src="./Images/empty.png" alt="" class="img-fluid" />
+        </div>
+      </div>
+    </div>`;
+    } else {
+      for (i = 0; i < keys.length; i++) {
+        console.log(i, productObj[keys[i]]["id"]);
+        newObj.push(productObj[keys[i]]);
+        //newObj[productObj[keys[i]]["id"]] = productObj[keys[i]];
+      }
+      console.log("newObj1", newObj);
+      cardArea.innerHTML = "";
+      addNewCard(newObj);
     }
-  }
-  if (filterValue == "id" && sortValue == "desc") {
+  } else if (filterValue == "id" && sortValue == "des") {
     console.log("output 2");
-    for (i = keys.length - 1; i >= 0; i++) {
-      console.log(productObj[keys[i]]["id"]);
+    newObj = [];
+    if (productObj == null || objLength == 0) {
+      cardArea.innerHTML = `<div class="Empty-area">
+      <div class="row">
+        <div class="col text-center">
+        <p class="fw-bold" >There is no Product in Inventory !</p>
+          <img src="./Images/empty.png" alt="" class="img-fluid" />
+        </div>
+      </div>
+    </div>`;
+    } else {
+      for (i = keys.length - 1; i >= 0; i--) {
+        console.log(i, productObj[keys[i]]["id"]);
+        newObj.push(productObj[keys[i]]);
+        //newObj[productObj[keys[i]]["id"]] = productObj[keys[i]];
+      }
+      console.log("newObj2", newObj);
+      cardArea.innerHTML = "";
+      addNewCard(newObj);
     }
   }
 }
-
-// for (i = keys.length - 1; i >= 0; i--) {
-//   console.log(productObj[keys[i]]["id"]);
-// }

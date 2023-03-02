@@ -16,7 +16,7 @@ const productPrice = document.getElementById("productPrice");
 const productDesc = document.getElementById("productDesc");
 
 let productObj = JSON.parse(localStorage.getItem("productObj"));
-console.log(productObj);
+//console.log(productObj);
 if (productObj == null) {
   localStorage.setItem("productObj", JSON.stringify({}));
 }
@@ -48,9 +48,9 @@ addSubmitBtn.addEventListener("click", () => {
     console.log("already in object");
     alert("Product Id is already Exist !");
   } else {
-    console.log(validStatus);
+    //console.log(validStatus);
     validation(productName.value, productPrice.value, productDesc.value);
-    console.log(validStatus);
+    //console.log(validStatus);
 
     if (
       validStatus["name"] == true &&
@@ -58,7 +58,7 @@ addSubmitBtn.addEventListener("click", () => {
       validStatus["desc"] == true &&
       imgStatus == true
     ) {
-      console.log("all clear");
+      //console.log("all clear");
       productObj[productId.value] = {
         id: productId.value,
         name: productName.value,
@@ -68,7 +68,7 @@ addSubmitBtn.addEventListener("click", () => {
       };
       localStorage.setItem("productObj", JSON.stringify(productObj));
       alert("successfully Added");
-      console.log(productObj);
+      //console.log(productObj);
     }
     validStatus["name"] = true;
     validStatus["price"] = true;
@@ -85,7 +85,7 @@ function disappear(place) {
 
 let validatePattern = {
   name: /^[A-Za-z][A-Za-z0-9_]/,
-  price: /^[0-9]+|^[0-9]+.[0-9]+/,
+  price: /[1-9]+[0-9]*$|^[0-9]+.[0-9]+$/,
   desc: /[A-za-z]+/,
 };
 

@@ -78,48 +78,60 @@
             <div class="form-area">
               <form action="">
                 <!--Product Id-->
-                <label for="productId" class="form-label">Product Id </label>
+                <label for="productId" class="form-label my-1 fw-semibold"
+                  >Product Id
+                </label>
                 <input
                   type="text"
                   name="productId"
                   readonly
-                  class="form-control"
+                  class="form-control my-1"
                   id="productId"
                   placeholder="Product Id"
                 />
                 <!--Product Name-->
-                <label for="productName" class="form-label"
+                <label for="productName" class="form-label my-1 fw-semibold"
                   >Product Name
                 </label>
                 <input
                   type="text"
                   name="productName"
-                  class="form-control"
+                  class="form-control my-1"
                   id="productName"
                   placeholder="Product Name"
                 />
+                <div class="text-danger my=1" id="name-error"></div>
                 <!--product Image-->
-                <label for="productImg" class="form-label">Image</label>
-                <input type="file" class="form-control" id="productImg" />
+                <label for="productImg" class="form-label my-1 fw-semibold"
+                  >Image</label
+                >
+                <input type="file" class="form-control my-1" id="productImg" />
+                <div class="text-danger my=1" id="image-error"></div>
                 <!--Product price-->
-                <label for="productPrice" class="form-label">Price</label>
+                <label for="productPrice" class="form-label my-1 fw-semibold"
+                  >Price</label
+                >
                 <input
                   type="text"
                   name="productPrice"
-                  class="form-control"
+                  class="form-control my-1"
                   id="productPrice"
                   placeholder="Product Price"
                 />
+                <div class="text-danger my=1" id="price-error"></div>
                 <!--Product Description-->
-                <label for="productDesc" class="form-label">Description</label>
+                <label for="productDesc" class="form-label my-1 fw-semibold"
+                  >Description</label
+                >
                 <textarea
                   id="productDesc"
-                  class="form-control"
+                  class="form-control my-1"
                   name="productDesc"
                   cols="30"
                   rows="5"
                   placeholder="Product Description"
                 ></textarea>
+                <div class="text-danger my=1" id="desc-error"></div>
                 <div class="form-btn-area mt-3">
                   <button
                     class="btn btn-success text-light"
@@ -127,22 +139,6 @@
                     type="button"
                   >
                     Add
-                  </button>
-                  <button
-                    type="reset"
-                    class="btn btn-secondary text-light"
-                    id="addSubmit"
-                  >
-                    reset
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-danger text-light"
-                    id="gen-btn"
-                    onclick="generateId()"
-                    ;
-                  >
-                    Generate Id
                   </button>
                 </div>
               </form>

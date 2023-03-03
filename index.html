@@ -110,41 +110,49 @@
             <input
               class="form-control me-2"
               type="search"
-              placeholder="Search"
+              placeholder="Search by Name"
               aria-label="Search"
               id="search-product"
-              onkeyup="optimizedSearch()"
             />
           </div>
           <div class="col-md-3 my-3 my-md-0 d-flex align-items-center">
-            <label for="filter" class="me-3">Filter</label>
+            <label for="filter" class="me-3 text-nowrap">Sort-By</label>
             <select
               class="form-select"
               aria-label="Default select example"
               id="filter-info"
             >
+              <option value="id">Select Sort-By</option>
               <option value="id">Id</option>
               <option value="name">Name</option>
               <option value="price">Price</option>
             </select>
           </div>
           <div class="col-md-3 my-3 my-md-0 d-flex align-items-center">
-            <label for="Sort" class="me-3">Sort</label>
+            <label for="Sort" class="me-3 text-nowrap">Sort-Order</label>
             <select
               class="form-select"
               aria-label="Default select example"
               id="sort-info"
             >
+              <option value="asc">Select Sort-Order</option>
               <option value="asc">Asc</option>
               <option value="des">Des</option>
             </select>
           </div>
+
+          <div class="col-md-2 my-3 my-md-0 d-flex align-items-center">
+            <button
+              class="btn btn-danger"
+              id="del-all"
+              onclick="deleteProductAll()"
+            >
+              Delete All
+            </button>
+          </div>
         </div>
 
-        <div
-          class="product-area d-flex flex-wrap justify-content-center mt-5"
-          id="card-area"
-        ></div>
+        <div class="product-area d-flex flex-wrap mt-5" id="card-area"></div>
       </section>
 
       <!-- Edit Modal -->

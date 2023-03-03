@@ -1,29 +1,39 @@
+// selection all elements
 const cardArea = document.getElementById("card-area");
-
-let objLength;
-let productObj = JSON.parse(localStorage.getItem("productObj"));
-
-if (productObj != null) {
-  objLength = Object.keys(productObj).length;
-}
-//validation and add
-if (productObj == null || objLength == 0) {
-  emptyProduct();
-} else {
-  addNewCard(productObj);
-}
-
 //selecting form input
 const productIdInput = document.getElementById("productId");
 const productNameInput = document.getElementById("productName");
 const productImgInput = document.getElementById("productImg");
 const productPriceInput = document.getElementById("productPrice");
 const productDescInput = document.getElementById("productDesc");
-// select update button
+// Filtering elements
+const filterValue = document.getElementById("filter-info");
+const sortValue = document.getElementById("sort-info");
+const searchInput = document.getElementById("search-product");
 
-let curCardId,
+// All variable Created
+let objLength,
+  curCardId,
   searchStat = false;
 
+//get data from localstorage
+let productObj = JSON.parse(localStorage.getItem("productObj"));
+
+//Checking Data present or not in localstorage
+if (productObj != null) {
+  objLength = Object.keys(productObj).length;
+}
+//Display Data on main page
+if (productObj == null || objLength == 0) {
+  cardArea.classList.add("justify-content-center");
+  emptyProduct();
+} else {
+  cardArea.classList.add("justify-content-start");
+  cardArea.classList.remove("justify-content-center");
+  addNewCard(productObj);
+}
+
+//Get data Function
 function getData(id) {
   productIdInput.value = productObj[id]["id"];
   productNameInput.value = productObj[id]["name"];
@@ -33,6 +43,7 @@ function getData(id) {
   console.log(productObj[id], productObj[id]["name"]);
 }
 
+//Update Data Function
 function updateData() {
   let newId = productIdInput.value;
   productObj[newId]["name"] = productNameInput.value;
@@ -45,6 +56,7 @@ function updateData() {
   location.reload();
 }
 
+//delete Data Function
 function deleteData(id) {
   let ans = prompt(
     `Are you sure to Delete ${id}? Note: type Y for Yes and N for No`
@@ -60,6 +72,7 @@ function deleteData(id) {
   }
 }
 
+// EmptyProduct Svg
 function emptyProduct() {
   cardArea.innerHTML = `<div class="Empty-area">
   <div class="row">
@@ -71,14 +84,15 @@ function emptyProduct() {
 </div>`;
 }
 
+//Data new data in Main screen
 function addNewCard(productObj) {
   for (let i in productObj) {
-    const newCard = `<div class="card m-2" id="${productObj[i]["id"]}">
+    const newCard = `<div class="card m-3" id="${productObj[i]["id"]}">
     <p class="mx-2">#${productObj[i]["id"]}</p>
     <img
       src="${productObj[i]["img"]}"
       class="card-img-top"
-      alt=""
+      alt="${productObj[i]["name"]}"
       height="200px"
     />
     <div class="card-body">
@@ -110,9 +124,7 @@ function addNewCard(productObj) {
   }
 }
 
-const filterValue = document.getElementById("filter-info");
-const sortValue = document.getElementById("sort-info");
-const searchInput = document.getElementById("search-product");
+//Eventlistener for Filter elements
 
 filterValue.addEventListener("change", () => {
   filterData(filterValue.value, sortValue.value, productArray);
@@ -137,17 +149,22 @@ sortValue.addEventListener("change", () => {
   }
 });
 
+//All keys in Product Object
 let keys = Object.keys(productObj);
 
 let productArray = [];
 resetProduct();
 
+//Filtering data based on Condition.
 function filterData(filterValue, sortValue, productIn) {
   if (filterValue == "id" && sortValue == "asc") {
     console.log("output");
     if (productObj == null || objLength == 0) {
+      cardArea.classList.add("justify-content-center");
       emptyProduct();
     } else {
+      cardArea.classList.add("justify-content-start");
+      cardArea.classList.remove("justify-content-center");
       let curlist = sortData(filterValue, productIn);
       console.log("in asc", curlist);
       cardArea.innerHTML = "";
@@ -156,8 +173,11 @@ function filterData(filterValue, sortValue, productIn) {
   } else if (filterValue == "id" && sortValue == "des") {
     console.log("output 2");
     if (productObj == null || objLength == 0) {
+      cardArea.classList.add("justify-content-center");
       emptyProduct();
     } else {
+      cardArea.classList.add("justify-content-start");
+      cardArea.classList.remove("justify-content-center");
       let curlist = sortData(filterValue, productIn);
       console.log("in des", curlist);
       cardArea.innerHTML = "";
@@ -165,45 +185,58 @@ function filterData(filterValue, sortValue, productIn) {
     }
   } else if (filterValue == "name" && sortValue == "asc") {
     if (productObj == null || objLength == 0) {
+      cardArea.classList.add("justify-content-center");
       emptyProduct();
     } else {
+      cardArea.classList.add("justify-content-start");
+      cardArea.classList.remove("justify-content-center");
       let curlist = sortData(filterValue, productIn);
       cardArea.innerHTML = "";
       addNewCard(curlist);
     }
   } else if (filterValue == "name" && sortValue == "des") {
     if (productObj == null || objLength == 0) {
+      cardArea.classList.add("justify-content-center");
       emptyProduct();
     } else {
+      cardArea.classList.add("justify-content-start");
+      cardArea.classList.remove("justify-content-center");
       let curlist = sortData(filterValue, productIn);
       cardArea.innerHTML = "";
       addNewCard(curlist.reverse());
     }
   } else if (filterValue == "price" && sortValue == "asc") {
     if (productObj == null || objLength == 0) {
+      cardArea.classList.add("justify-content-center");
       emptyProduct();
     } else {
+      cardArea.classList.add("justify-content-start");
+      cardArea.classList.remove("justify-content-center");
       let curlist = sortData(filterValue, productIn);
       cardArea.innerHTML = "";
       addNewCard(curlist);
     }
   } else if (filterValue == "price" && sortValue == "des") {
     if (productObj == null || objLength == 0) {
+      cardArea.classList.add("justify-content-center");
       emptyProduct();
     } else {
+      cardArea.classList.add("justify-content-start");
+      cardArea.classList.remove("justify-content-center");
       let curlist = sortData(filterValue, productIn);
       cardArea.innerHTML = "";
       addNewCard(curlist.reverse());
     }
   }
 }
-
+//To reset Product array
 function resetProduct() {
   for (i in productObj) {
     productArray.push(productObj[i]);
   }
 }
 
+//Sorting function
 function sortData(sortBy, productIn = productArray) {
   if (sortBy == "price" || sortBy == "id") {
     let ans = productArray.sort((a, b) => {
@@ -230,19 +263,27 @@ function sortData(sortBy, productIn = productArray) {
   }
 }
 
+let count1 = 0,
+  count2 = 0;
+
+//Search Function
 function searchValue() {
+  console.log("count2:", ++count2);
   let toSearch = searchInput.value,
     searchArray = [];
+  console.log("search value:");
   for (i in productArray) {
     if (productArray[i]["name"].includes(toSearch)) {
       searchArray.push(productArray[i]);
     }
   }
   let l = Object.keys(searchArray).length;
-
-  if (filterValue.value == "") {
+  if (searchInput.value == "") {
+    productArray = [];
+    resetProduct();
+    cardArea.innerHTML = "";
+    addNewCard(productArray);
   }
-
   if (l == 0) {
     cardArea.innerHTML = `<div class="Empty-area">
   <div class="row">
@@ -252,14 +293,22 @@ function searchValue() {
     </div>
   </div>
 </div>`;
+
+    cardArea.classList.add("justify-content-center");
   } else {
+    cardArea.classList.add("justify-content-start");
+    cardArea.classList.remove("justify-content-center");
     productArray = searchArray;
     filterData(filterValue.value, sortValue.value, productArray);
+    productArray = [];
+    resetProduct();
   }
 }
 
+let timer;
+//Debounce for Search operation.
 let goSearch = function (fn, d) {
-  let timer;
+  console.log("count1:", ++count1);
   return function () {
     clearTimeout(timer);
     timer = setTimeout(() => {
@@ -268,4 +317,24 @@ let goSearch = function (fn, d) {
   };
 };
 
-let optimizedSearch = goSearch(searchValue, (d = 500));
+searchInput.addEventListener("keyup", () => {
+  if (searchInput.value == "") {
+    productArray = [];
+    resetProduct();
+    cardArea.innerHTML = "";
+    addNewCard(productArray);
+  } else {
+    let optimizedSearch = goSearch(searchValue, 300);
+    optimizedSearch();
+  }
+});
+
+function deleteProductAll() {
+  let ans = prompt(
+    "Do you Want to Delete All Product? Enter Y for Yes and N for No."
+  );
+  if (ans == "Y") {
+    localStorage.setItem("productObj", JSON.stringify({}));
+    location.reload();
+  }
+}

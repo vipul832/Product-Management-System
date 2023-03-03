@@ -197,15 +197,17 @@
                   id="productName"
                   placeholder="Product Name"
                 />
+                <div class="text-danger my=1" id="name-error"></div>
                 <!--product Image-->
                 <label for="productImg" class="form-label">Image</label>
                 <input
-                  type="text"
+                  type="file"
                   name="productImg"
                   class="form-control"
                   id="productImg"
                   placeholder="Product Image"
                 />
+                <div class="text-danger my=1" id="image-error"></div>
                 <!--Product price-->
                 <label for="productPrice" class="form-label">Price</label>
                 <input
@@ -215,6 +217,7 @@
                   id="productPrice"
                   placeholder="Product Price"
                 />
+                <div class="text-danger my=1" id="price-error"></div>
                 <!--Product Description-->
                 <label for="productDesc" class="form-label">Description</label>
                 <textarea
@@ -225,16 +228,11 @@
                   rows="5"
                   placeholder="Product Description"
                 ></textarea>
-                <!-- <div class="form-btn-area mt-3">
-                  <button
-                    type="submit"
-                    class="btn btn-success text-light"
-                    id="submit-btn"
-                  >
-                    Update
-                  </button>
-                </div> -->
+                <div class="text-danger my=1" id="desc-error"></div>
               </form>
+              <div class="d-flex justify-content-center">
+                <img src="" alt="" id="img-preview" />
+              </div>
             </div>
             <div class="modal-footer">
               <button

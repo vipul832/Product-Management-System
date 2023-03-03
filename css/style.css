@@ -19,3 +19,7 @@
 .card-btn {
   margin-top: auto;
 }
+
+#img-preview {
+  height: 200px;
+}

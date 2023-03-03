@@ -1,5 +1,6 @@
 // selection all elements
 const cardArea = document.getElementById("card-area");
+const imgPreview = document.getElementById("img-preview");
 //selecting form input
 const productIdInput = document.getElementById("productId");
 const productNameInput = document.getElementById("productName");
@@ -37,23 +38,59 @@ if (productObj == null || objLength == 0) {
 function getData(id) {
   productIdInput.value = productObj[id]["id"];
   productNameInput.value = productObj[id]["name"];
-  productImgInput.value = productObj[id]["img"];
   productPriceInput.value = productObj[id]["price"];
   productDescInput.value = productObj[id]["desc"];
   console.log(productObj[id], productObj[id]["name"]);
+  //productImgInput.value = productObj[id]["img"];
+  imgPreview.src = productObj[id]["img"];
+  imgPreview.alt = productObj[id]["name"];
 }
 
 //Update Data Function
 function updateData() {
-  let newId = productIdInput.value;
-  productObj[newId]["name"] = productNameInput.value;
-  productObj[newId]["img"] = productImgInput.value;
-  productObj[newId]["price"] = productPriceInput.value;
-  productObj[newId]["desc"] = productDescInput.value;
-  console.log("before update data:", productObj);
-  console.log("after update data:", productObj);
-  localStorage.setItem("productObj", JSON.stringify(productObj));
-  location.reload();
+  if (
+    productIdInput.value == "" ||
+    productImgInput.value == "" ||
+    productNameInput.value == "" ||
+    productPriceInput.value == "" ||
+    productDescInput.value == ""
+  ) {
+    alert("Please check you input if any is Blank");
+    return;
+  } else {
+    //console.log(validStatus);
+    validation(
+      productNameInput.value,
+      productPriceInput.value,
+      productDescInput.value
+    );
+    //console.log(validStatus);
+
+    if (
+      validStatus["name"] == true &&
+      validStatus["price"] == true &&
+      validStatus["desc"] == true &&
+      imgStatus == true
+    ) {
+      //console.log("all clear");
+      let newId = productIdInput.value;
+      productObj[newId]["name"] = productNameInput.value;
+      productObj[newId]["img"] = imgUrl;
+      productObj[newId]["price"] = productPriceInput.value;
+      productObj[newId]["desc"] = productDescInput.value;
+      console.log("before update data:", productObj);
+      console.log("after update data:", productObj);
+      localStorage.setItem("productObj", JSON.stringify(productObj));
+      location.reload();
+      //console.log(productObj);
+    } else {
+      return;
+    }
+    validStatus["name"] = true;
+    validStatus["price"] = true;
+    validStatus["desc"] = true;
+    imgStatus = true;
+  }
 }
 
 //delete Data Function
@@ -336,5 +373,76 @@ function deleteProductAll() {
   if (ans == "Y") {
     localStorage.setItem("productObj", JSON.stringify({}));
     location.reload();
+  }
+}
+
+let validatePattern = {
+  name: /^[A-Za-z][A-Za-z0-9_]/,
+  price: /[1-9]+[0-9]*$|^[0-9]+.[0-9]+$/,
+  desc: /[A-za-z]+/,
+};
+
+let validStatus = {
+  name: true,
+  price: true,
+  desc: true,
+};
+
+let imgUrl,
+  imgStatus = true,
+  imgName;
+
+productImgInput.addEventListener("change", function () {
+  const inputImage = new FileReader();
+
+  inputImage.addEventListener("load", () => {
+    imgUrl = inputImage.result;
+    imgName = this.files[0].name;
+  });
+  inputImage.readAsDataURL(this.files[0]);
+});
+
+const nameError = document.getElementById("name-error");
+const imageError = document.getElementById("image-error");
+const priceError = document.getElementById("price-error");
+const descError = document.getElementById("desc-error");
+
+function disappear(place, element) {
+  setTimeout(() => {
+    place.classList.remove("border-danger");
+    element.innerText = "";
+  }, 5000);
+}
+
+function validation(name, price, desc) {
+  if (!/.(gif|jpg|jpeg|png)/.test(imgName)) {
+    imgStatus = false;
+    productImgInput.classList.add("border-danger");
+    imageError.innerText = `Accept only jpeg/png/gif/jpg`;
+    disappear(productImg, imageError);
+  }
+  for (i in validatePattern) {
+    if (i == "name") {
+      if (!validatePattern[i].test(name)) {
+        validStatus[i] = false;
+        productNameInput.classList.add("border-danger");
+        nameError.innerText = `Please Enter the valid Name ${productNameInput.value} (Example: pen,bottle)`;
+        disappear(productName, nameError);
+      }
+    } else if (i == "price") {
+      if (!validatePattern[i].test(price)) {
+        validStatus[i] = false;
+        productPriceInput.classList.add("border-danger");
+        priceError.innerText = `Please Enter the valid price ${productPriceInput.value} (Example: 15,0.25,25.222)`;
+        disappear(productPrice, priceError);
+      }
+    } else if (i == "desc") {
+      if (!validatePattern[i].test(desc)) {
+        validStatus[i] = false;
+        productDescInput.classList.add("border-danger");
+        descError.innerText = `Please Enter the valid description ${productDescInput.value} (Example: This is pen)`;
+        disappear(productDesc, descError);
+      }
+    }
   }
 }

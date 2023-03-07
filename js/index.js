@@ -39,18 +39,17 @@ function getData(id) {
   productIdInput.value = productObj[id]["id"];
   productNameInput.value = productObj[id]["name"];
   productPriceInput.value = productObj[id]["price"];
+  imgUrl = productObj[id]["img"];
   productDescInput.value = productObj[id]["desc"];
-  console.log(productObj[id], productObj[id]["name"]);
-  //productImgInput.value = productObj[id]["img"];
   imgPreview.src = productObj[id]["img"];
   imgPreview.alt = productObj[id]["name"];
 }
 
 //Update Data Function
 function updateData() {
+  //console.log("update ", productNameInput.value);
   if (
     productIdInput.value == "" ||
-    productImgInput.value == "" ||
     productNameInput.value == "" ||
     productPriceInput.value == "" ||
     productDescInput.value == ""
@@ -58,14 +57,13 @@ function updateData() {
     alert("Please check you input if any is Blank");
     return;
   } else {
-    //console.log(validStatus);
+    //console.log("before", validStatus, imgStatus);
     validation(
       productNameInput.value,
       productPriceInput.value,
       productDescInput.value
     );
-    //console.log(validStatus);
-
+    //console.log("after", validStatus, imgStatus);
     if (
       validStatus["name"] == true &&
       validStatus["price"] == true &&
@@ -75,11 +73,12 @@ function updateData() {
       //console.log("all clear");
       let newId = productIdInput.value;
       productObj[newId]["name"] = productNameInput.value;
+      console.log("Image name", imgName);
       productObj[newId]["img"] = imgUrl;
       productObj[newId]["price"] = productPriceInput.value;
       productObj[newId]["desc"] = productDescInput.value;
-      console.log("before update data:", productObj);
-      console.log("after update data:", productObj);
+      //console.log("before update data:", productObj);
+      // console.log("after update data:", productObj);
       localStorage.setItem("productObj", JSON.stringify(productObj));
       location.reload();
       //console.log(productObj);
@@ -90,6 +89,7 @@ function updateData() {
     validStatus["price"] = true;
     validStatus["desc"] = true;
     imgStatus = true;
+    imgChangeStatus = false;
   }
 }
 
@@ -98,7 +98,7 @@ function deleteData(id) {
   let ans = prompt(
     `Are you sure to Delete ${id}? Note: type Y for Yes and N for No`
   );
-  console.log(ans);
+  //console.log(ans);
 
   if (ans == "Y") {
     delete productObj[id];
@@ -168,7 +168,7 @@ filterValue.addEventListener("change", () => {
   if (searchInput.value) {
     return;
   } else if (searchInput.value == "") {
-    console.log("black");
+    //console.log("blank");
     productArray = [];
     resetProduct();
     filterData(filterValue.value, sortValue.value, productArray);
@@ -179,7 +179,7 @@ sortValue.addEventListener("change", () => {
   if (searchInput.value) {
     return;
   } else if (searchInput.value == "") {
-    console.log("black");
+    //console.log("black");
     productArray = [];
     resetProduct();
     filterData(filterValue.value, sortValue.value, productArray);
@@ -195,7 +195,7 @@ resetProduct();
 //Filtering data based on Condition.
 function filterData(filterValue, sortValue, productIn) {
   if (filterValue == "id" && sortValue == "asc") {
-    console.log("output");
+    //console.log("output");
     if (productObj == null || objLength == 0) {
       cardArea.classList.add("justify-content-center");
       emptyProduct();
@@ -203,12 +203,12 @@ function filterData(filterValue, sortValue, productIn) {
       cardArea.classList.add("justify-content-start");
       cardArea.classList.remove("justify-content-center");
       let curlist = sortData(filterValue, productIn);
-      console.log("in asc", curlist);
+      //console.log("in asc", curlist);
       cardArea.innerHTML = "";
       addNewCard(curlist);
     }
   } else if (filterValue == "id" && sortValue == "des") {
-    console.log("output 2");
+    //console.log("output 2");
     if (productObj == null || objLength == 0) {
       cardArea.classList.add("justify-content-center");
       emptyProduct();
@@ -216,7 +216,7 @@ function filterData(filterValue, sortValue, productIn) {
       cardArea.classList.add("justify-content-start");
       cardArea.classList.remove("justify-content-center");
       let curlist = sortData(filterValue, productIn);
-      console.log("in des", curlist);
+      //console.log("in des", curlist);
       cardArea.innerHTML = "";
       addNewCard(curlist.reverse());
     }
@@ -300,15 +300,11 @@ function sortData(sortBy, productIn = productArray) {
   }
 }
 
-let count1 = 0,
-  count2 = 0;
-
 //Search Function
 function searchValue() {
-  console.log("count2:", ++count2);
   let toSearch = searchInput.value,
     searchArray = [];
-  console.log("search value:");
+  //console.log("search value:");
   for (i in productArray) {
     if (productArray[i]["name"].includes(toSearch)) {
       searchArray.push(productArray[i]);
@@ -345,7 +341,6 @@ function searchValue() {
 let timer;
 //Debounce for Search operation.
 let goSearch = function (fn, d) {
-  console.log("count1:", ++count1);
   return function () {
     clearTimeout(timer);
     timer = setTimeout(() => {
@@ -390,12 +385,15 @@ let validStatus = {
 
 let imgUrl,
   imgStatus = true,
+  imgChangeStatus = false,
   imgName;
 
 productImgInput.addEventListener("change", function () {
   const inputImage = new FileReader();
 
   inputImage.addEventListener("load", () => {
+    imgChangeStatus = true;
+    imgStatus = true;
     imgUrl = inputImage.result;
     imgName = this.files[0].name;
   });
@@ -415,11 +413,14 @@ function disappear(place, element) {
 }
 
 function validation(name, price, desc) {
-  if (!/.(gif|jpg|jpeg|png)/.test(imgName)) {
-    imgStatus = false;
-    productImgInput.classList.add("border-danger");
-    imageError.innerText = `Accept only jpeg/png/gif/jpg`;
-    disappear(productImg, imageError);
+  if (imgChangeStatus == true) {
+    if (!/.(gif|jpg|jpeg|png)/.test(imgName)) {
+      imgStatus = false;
+      imgChangeStatus = false;
+      productImgInput.classList.add("border-danger");
+      imageError.innerText = `Accept only jpeg/png/gif/jpg`;
+      disappear(productImg, imageError);
+    }
   }
   for (i in validatePattern) {
     if (i == "name") {

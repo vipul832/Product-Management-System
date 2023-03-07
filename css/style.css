@@ -1,9 +1,16 @@
-.navbar-brand {
-  font-family: "Tilt Prism", cursive;
-}
 
 * {
   font-family: "Roboto", sans-serif;
+}
+
+
+body::-webkit-scrollbar
+{
+  display: none;  
+}
+
+.navbar-brand {
+  font-family: "Tilt Prism", cursive;
 }
 
 .card {

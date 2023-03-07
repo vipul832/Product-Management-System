@@ -8,7 +8,7 @@
 
 This application should allow user to create new product, update existing product and user should be able to filter product by Name and able to sort it by productId, Product Name and Price. Apply proper validation wherever its applicable. Use localStorage for storing product and routing for view/edit product.
 ### Live Demo
-- Demo Link.
+- [Demo Link](https://vipulc8.github.io/Product-Management-System/)
 
 
 ## Table of Content

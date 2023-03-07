@@ -7,6 +7,9 @@
  - Description
 
 This application should allow user to create new product, update existing product and user should be able to filter product by Name and able to sort it by productId, Product Name and Price. Apply proper validation wherever its applicable. Use localStorage for storing product and routing for view/edit product.
+### Live Demo
+- Demo Link.
+
 
 ## Table of Content
 
@@ -60,3 +63,16 @@ This application should allow user to create new product, update existing produc
   - Sort Order Ascending or Descending
   
 ### ScreenShot 
+  - Home Page
+  
+    ![](https://www.linkpicture.com/q/home-pagepng_2.png)
+    
+  - Add Product page
+   
+    ![](https://www.linkpicture.com/q/Screenshot-4_35.png)
+    
+  - Search and Sort by Id,Name and Price and Sort Order by Ascending and Descending order
+
+    ![](https://www.linkpicture.com/q/Screenshot-2_2.png)
+    
+    ![](https://www.linkpicture.com/q/Screenshot-3_51.png)

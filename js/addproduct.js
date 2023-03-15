@@ -22,6 +22,42 @@ let productObj = JSON.parse(localStorage.getItem("productObj"));
 if (productObj == null) {
   localStorage.setItem("productObj", JSON.stringify({}));
 }
+
+// add product function
+function addProductFunction() {
+  //console.log(validStatus);
+  validation(productName.value, productPrice.value, productDesc.value);
+  //console.log(validStatus);
+
+  if (
+    validStatus["name"] == true &&
+    validStatus["price"] == true &&
+    validStatus["desc"] == true &&
+    imgStatus == true
+  ) {
+    //console.log("all clear");
+    productObj[productId.value] = {
+      id: productId.value,
+      name: productName.value,
+      img: imgUrl,
+      price: productPrice.value,
+      desc: productDesc.value,
+    };
+    localStorage.setItem("productObj", JSON.stringify(productObj));
+    alert("successfully Added");
+    //console.log(productObj);
+  }
+  validStatus["name"] = true;
+  validStatus["price"] = true;
+  validStatus["desc"] = true;
+  imgStatus = true;
+  generateId();
+  productName.value = "";
+  productPrice.value = "";
+  productImg.value = "";
+  productDesc.value = "";
+}
+
 //Generate URL of image.
 productImg.addEventListener("change", function () {
   const inputImage = new FileReader();
@@ -50,37 +86,11 @@ addSubmitBtn.addEventListener("click", () => {
     console.log("already in object");
     alert("Product Id is already Exist !");
   } else {
-    //console.log(validStatus);
-    validation(productName.value, productPrice.value, productDesc.value);
-    //console.log(validStatus);
-
-    if (
-      validStatus["name"] == true &&
-      validStatus["price"] == true &&
-      validStatus["desc"] == true &&
-      imgStatus == true
-    ) {
-      //console.log("all clear");
-      productObj[productId.value] = {
-        id: productId.value,
-        name: productName.value,
-        img: imgUrl,
-        price: productPrice.value,
-        desc: productDesc.value,
-      };
-      localStorage.setItem("productObj", JSON.stringify(productObj));
-      alert("successfully Added");
-      //console.log(productObj);
+    if (productObj == null) {
+      addProductFunction();
+    } else {
+      addProductFunction();
     }
-    validStatus["name"] = true;
-    validStatus["price"] = true;
-    validStatus["desc"] = true;
-    imgStatus = true;
-    generateId();
-    productName.value = "";
-    productPrice.value = "";
-    productImg.value = "";
-    productDesc.value = "";
   }
 });
 

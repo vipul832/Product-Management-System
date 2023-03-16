@@ -14,7 +14,8 @@ function generateId() {
 
 let imgUrl,
   imgStatus = true,
-  imgName;
+  imgName,
+  imgSize;
 
 //getting data from localstorage
 let productObj = JSON.parse(localStorage.getItem("productObj"));
@@ -36,6 +37,13 @@ function addProductFunction() {
     imgStatus == true
   ) {
     //console.log("all clear");
+    productObj = JSON.parse(localStorage.getItem("productObj"));
+    if (productObj == null) {
+      //console.log("in null");
+      localStorage.setItem("productObj", JSON.stringify({}));
+      productObj = JSON.parse(localStorage.getItem("productObj"));
+      //console.log("obj1", productObj);
+    }
     productObj[productId.value] = {
       id: productId.value,
       name: productName.value,
@@ -45,17 +53,17 @@ function addProductFunction() {
     };
     localStorage.setItem("productObj", JSON.stringify(productObj));
     alert("successfully Added");
+    generateId();
+    productName.value = "";
+    productPrice.value = "";
+    productImg.value = "";
+    productDesc.value = "";
     //console.log(productObj);
   }
   validStatus["name"] = true;
   validStatus["price"] = true;
   validStatus["desc"] = true;
   imgStatus = true;
-  generateId();
-  productName.value = "";
-  productPrice.value = "";
-  productImg.value = "";
-  productDesc.value = "";
 }
 
 //Generate URL of image.
@@ -66,7 +74,7 @@ productImg.addEventListener("change", function () {
     imgUrl = inputImage.result;
     imgName = this.files[0].name;
   });
-
+  imgSize = this.files[0].size / 1000;
   inputImage.readAsDataURL(this.files[0]);
 });
 generateId();
@@ -80,15 +88,8 @@ addSubmitBtn.addEventListener("click", () => {
   ) {
     alert("Please check you input if any is Blank");
     return;
-  }
-
-  if (productObj.hasOwnProperty(productId.value)) {
-    console.log("already in object");
-    alert("Product Id is already Exist !");
   } else {
-    if (productObj == null) {
-      addProductFunction();
-    } else {
+    {
       addProductFunction();
     }
   }
@@ -123,6 +124,12 @@ function validation(name, price, desc) {
     imgStatus = false;
     productImg.classList.add("border-danger");
     imageError.innerText = `Accept only jpeg/png/gif/jpg`;
+    disappear(productImg, imageError);
+  }
+  if (imgSize > 200) {
+    imgStatus = false;
+    productImg.classList.add("border-danger");
+    imageError.innerText = `Accept only Image size less than 200Kb`;
     disappear(productImg, imageError);
   }
   for (i in validatePattern) {
